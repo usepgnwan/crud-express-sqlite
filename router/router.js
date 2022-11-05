@@ -22,5 +22,9 @@ router.get('/create_table', function(req, res) {
 
 });
 
+router.get('/', (req, res) => {
+    res.send("ok sukses");
+});
+
 
 module.exports = { router };
