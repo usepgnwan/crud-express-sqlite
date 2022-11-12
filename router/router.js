@@ -30,22 +30,31 @@ router.get('/', (req, res) => {
 
 router.get('/allcomment', async(req, res) => {
     let comment = await db.getAllComment();
-    console.log(comment)
-    let rows = {};
-    let code = 0;
-    if (Array.isArray(comment)) {
-        rows.status = true;
-        rows.msg = "succes get all comment";
-        rows.data = comment;
-        code = 200;
-    } else {
-        rows.status = false;
-        rows.msg = data.errorMessage;
-        rows.data = [];
-        code = 500;
-    }
-    return res.status(code).send(rows);
+    return await db.templateReturn(res, comment, "get all comment");
+});
+router.post('/insertComment', async(req, res) => {
+    let data = req.body;
+    let comment = await db.insertComment(data);
+    return await db.templateReturn(res, comment, "insert comment success");
 });
 
+router.patch('/updateComment/:id', async(req, res) => {
+    let data = req.body;
+    let id = req.params.id;
+    let comment = await db.UpdateComment(id, data);
+    return await db.templateReturn(res, comment, "update comment success");
+})
+
+
+router.get('/getAllTamu', async(req, res) => {
+    let tamu = await db.getAllTamu();
+    return await db.templateReturn(res, tamu, "get all tamu");
+});
+
+router.post('/insertScanTamu', async(req, res) => {
+    let data = req.body;
+    let comment = await db.insertScanTamu(data);
+    return await db.templateReturn(res, comment, "insert tamu success");
+});
 
 module.exports = { router };
