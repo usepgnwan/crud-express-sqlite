@@ -57,4 +57,10 @@ router.post('/insertScanTamu', async(req, res) => {
     return await db.templateReturn(res, comment, "insert tamu success");
 });
 
+router.delete("/deleteScanTamu/:id", async(req, res) => {
+    //   let data = req.body;
+    let id = req.params.id;
+    let comment = await db.deleteScanTamu(id);
+    return await db.templateReturn(res, comment, "delete tamu success");
+});
 module.exports = { router };

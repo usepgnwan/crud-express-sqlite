@@ -162,14 +162,22 @@ module.exports = {
     },
     insertScanTamu: async(data) => {
         if (Object.keys(data).length > 0) {
-            tgl = tgl.split(" ");
+            tgls = tgl.split(" ");
             let { nama } = data;
             let ins = await db.run("INSERT INTO scan_tamu (nama,tanggal,jam) VALUES (?,?,?)", [
-                nama, tgl[0], tgl[1]
+                nama, tgls[0], tgls[1]
             ]);
             return await db.get("SELECT * FROM scan_tamu where id = ? ", [ins.lastID]);
         } else {
             return 0;
         }
+    },
+    deleteScanTamu: async(id) => {
+        // if (Object.keys(data).length > 0) {
+        let ins = await db.run("DELETE FROM scan_tamu Where id = ?", [id]);
+        return await db.all("SELECT * FROM scan_tamu");
+        // } else {
+        //     return 0;
+        // }
     },
 }
